@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="flex">
+        <div class="w-1.5/5 bg-blue-600 h-screen">
+          <div class="p-5">
+            <mat-card class="mt-6 ml-2 mr-2 w-25">
+                <form [formGroup]="todoForm">
+                    <mat-form-field class="w-full">
+                        <mat-label>Task Name</mat-label>
+                        <input formControlName="item" matInput placeholder="Placeholder">
+                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                        <mat-hint>add task name here</mat-hint>
+                      </mat-form-field>
+                      <button *ngIf="!isEditEnabled" (click)="addtask()" mat-raised-button color="primary" class="bg-blue-600" [disabled]="todoForm.invalid" class="ml-6 mb-2">Add</button>
+                      <button *ngIf="isEditEnabled" (click)="updatetask()" mat-raised-button color="primary" [disabled]="todoForm.invalid" class="ml-6 mb-2">Update</button>
+                </form>
+            </mat-card>
+
+          </div>
+        </div>
+        <div class="w-3/5 mt-6" >
+            <div cdkDropListGroup>
+                <div class="flex">
+                    <div  class="md:w-5/12">
+                     <!-- To-Do -->
+                     <div class="example-container">
+                        <h2 class="head-title">TO DO <span *ngIf="tasks.length>0"> - {{tasks.length}}</span></h2>
+                            
+                        <div
+                          cdkDropList
+                          [cdkDropListData]="tasks"
+                          class="example-list"
+                          (cdkDropListDropped)="drop($event)">
+                          <div class="example-box" *ngFor="let item of tasks;let i = index" cdkDrag>{{item.description}}
+                            <div class="box">
+                              <button mat-icon-button color="warn" (click)="deleteTask(i)"><mat-icon>delete</mat-icon></button>
+                              <button mat-icon-button color="primary" (click)="editTask(item,i)"><mat-icon>edit</mat-icon></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div  class="md:w-5/12">
+                            <!-- inpogress -->
+                            <div class="example-container">
+                                <h2 class="head-title">IN PROGRESS <span *ngIf="inprogress.length>0"> - {{inprogress.length}}</span></h2>
+                            
+                                <div
+                                  cdkDropList
+                                  [cdkDropListData]="inprogress"
+                                  class="example-list"
+                                  (cdkDropListDropped)="drop($event)">
+                                  <div class="example-box" *ngFor="let item of inprogress;let i = index" cdkDrag>{{item.description}}
+                                    <div class="box">
+                                      <button mat-icon-button color="warn" (click)="deleteInProgressTask(i)"><mat-icon>delete</mat-icon></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    </div>
+                    <div  class="md:w-5/12">
+                        <!-- done -->
+                        <div class="example-container">
+                            <h2 class="head-title">DONE <span *ngIf="done.length>0"> - {{done.length}}</span></h2>
+                        
+                            <div
+                              cdkDropList
+                              [cdkDropListData]="done"
+                              class="example-list"
+                              (cdkDropListDropped)="drop($event)">
+                              <div class="example-box" *ngFor="let item of done;let i = index" cdkDrag>{{item.description}}
+                                <div class="box">
+                                  <button mat-icon-button color="warn" (click)="deleteDoneTask(i)"><mat-icon>delete</mat-icon></button>
+                                  <button mat-icon-button color="accent"><mat-icon>check_circle</mat-icon></button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+</div>
